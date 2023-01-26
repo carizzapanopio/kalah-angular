@@ -1,0 +1,62 @@
+<div>
+    <div *ngIf="currentGame?.status === 'waiting'" class="position-absolute text-center spinner-container">
+        <div class="spinner-border" role="status">
+        </div>
+        <p>Waiting for another player</p>
+    </div>
+    <div *ngIf="currentGame?.status === 'ongoing'" class="w-100">
+        <h3>You are {{currentPlayer.name}}</h3>
+
+        <div class="row mx-auto">
+            <h3>{{gameInfo?.playerOne?.name}} {{ whosPlaying?.id == gameInfo?.playerOne?.id ? " - It's your turn!" :
+                ""}}
+            </h3>
+        </div>
+
+        <div class="row">
+            <div class="col-2 border d-flex align-items-center justify-content-center border" id="player-1-zone">
+                <!-- {{gameInfo?.playerOne?.name}}<br />
+                {{ zoneOneValue }} -->
+                <svg width="200" height="200">
+                    <circle cx="100" cy="100" r="80" stroke="brown" stroke-width="4" fill="transparent" />
+                </svg>
+            </div>
+
+
+            <div class="col-8 border">
+                <div class="row border" *ngFor="let g of getGamePlayValues(); let gamePlayIndex = index"
+                    [attr.style]="whosPlaying?.id === g.player.id ? 'background: #ffff90' : ''">
+                    <div class="col p-0" *ngFor="let house of formatHouseValues(g); let houseIndex = index"
+                        id="player-{{ g.player.id }}-house-{{ house.id }}" [attr.data-player-id]="g.player.id"
+                        [attr.role]="whosPlaying?.id === g.player.id ? 'button' : ''" [attr.data-house-id]="house.id"
+                        (click)="play(gamePlayIndex, house.id, g.player.id)">
+                        <!-- Player id {{ g.player.id }} <br />
+                        Value: {{ house.value}} <br />
+                        House Id: {{ house.id }} <br />
+                        House index: {{ houseIndex }} -->
+                        <svg width="200" height="200">
+                            <circle cx="100" cy="100" r="80" stroke="brown" stroke-width="4" fill="transparent" />
+                        </svg>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+            <div class="col-2 border d-flex align-items-center justify-content-center border" id="player-2-zone">
+                <!-- {{gameInfo?.playerTwo?.name}}<br />
+                {{ zoneTwoValue }} -->
+                <svg width="200" height="200">
+                    <circle cx="100" cy="100" r="80" stroke="brown" stroke-width="4" fill="transparent" />
+                </svg>
+            </div>
+        </div>
+
+        <div class="row mx-auto">
+            <h3>{{gameInfo?.playerTwo?.name}} {{ whosPlaying?.id == gameInfo?.playerTwo?.id ? " - It's your turn!" :
+                ""}}
+            </h3>
+        </div>
+    </div>
+</div>
